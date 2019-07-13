@@ -109,14 +109,15 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_return_error_message_when_not_provide_ticket() throws Exception {
+    public void should_return_error_message_when_ticket_is_wrong() throws Exception {
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
 
+        Ticket ticket = new Ticket();
         parkingBoy.park(car);
 
-        assertThat(parkingBoy.fetch(null).getMessage(), is("Unrecognized parking ticket."));
+        assertThat(parkingBoy.fetch(ticket).getMessage(), is("Unrecognized parking ticket."));
     }
 
     @Test
@@ -129,5 +130,16 @@ public class ParkingBoyTest {
         parkingBoy.fetch(ticket);
 
         assertThat(parkingBoy.fetch(ticket).getMessage(), is("Unrecognized parking ticket."));
+    }
+
+    @Test
+    public void should_return_error_message_when_not_provide_ticket() throws Exception {
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        parkingBoy.park(car);
+
+        assertThat(parkingBoy.fetch(null).getMessage(), is("Please provide your parking ticket."));
     }
 }

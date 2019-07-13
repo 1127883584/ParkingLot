@@ -27,15 +27,21 @@ public class ParkingLot {
     }
 
     public GetCarResult getCar(Ticket ticket) {
-        Car car = parkingCarTicket.get(ticket);
         GetCarResult getCarResult = new GetCarResult();
-        getCarResult.setCar(car);
-        if (car == null) {
-            getCarResult.setMessage("Unrecognized parking ticket.");
+        if (ticket == null) {
+            getCarResult.setCar(null);
+            getCarResult.setMessage("Please provide your parking ticket.");
         } else {
-            parkingCarTicket.remove(ticket);
-            getCarResult.setMessage("Success fetch the car.");
+            Car car = parkingCarTicket.get(ticket);
+            getCarResult.setCar(car);
+            if (car == null) {
+                getCarResult.setMessage("Unrecognized parking ticket.");
+            } else {
+                parkingCarTicket.remove(ticket);
+                getCarResult.setMessage("Success fetch the car.");
+            }
         }
+
         return getCarResult;
     }
 }
