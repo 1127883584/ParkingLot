@@ -54,4 +54,20 @@ public class ParkingBoyTest {
             parkingBoy.fetch(wrongTicket);
         });
     }
+
+    @Test
+    public void should_not_fetch_when_ticket_is_used() throws Exception {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        //when
+        Ticket ticket = parkingBoy.park(car);
+        parkingBoy.fetch(ticket);
+
+        Assertions.assertThrows(Exception.class, () -> {
+            parkingBoy.fetch(ticket);
+        });
+    }
 }

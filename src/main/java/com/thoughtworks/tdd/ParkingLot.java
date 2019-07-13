@@ -20,6 +20,7 @@ public class ParkingLot {
         if (car == null) {
             throw new Exception();
         }
+        parkingCarTicket.remove(ticket);
         return car;
     }
 }
