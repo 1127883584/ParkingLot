@@ -7,9 +7,9 @@ public class ParkingBoy {
         this.parkingLot = parkingLot;
     }
 
-    public Ticket park(Car car) throws Exception {
-        Ticket ticket = parkingLot.park(car);
-        return ticket;
+    public ParkCarResult park(Car car) {
+        ParkCarResult parkCarResult = parkingLot.park(car);
+        return parkCarResult;
     }
 
     public GetCarResult fetch(Ticket ticket){
