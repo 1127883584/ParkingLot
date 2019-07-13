@@ -359,7 +359,7 @@ public class ParkingBoyTest {
         ParkCarResult secondParkCarResult = secondServiceManager.park(secondCar);
         Ticket secondTicket = secondParkCarResult.getTicket();
 
-        //the manage fetch the car is not in his management ,it is error
+        //the manage fetch the car is not in his management ,it is error 
         GetCarResult getCarResult = firstServiceManager.fetch(secondTicket);
         assertSame("This parking lot is not in your jurisdiction.", getCarResult.getMessage());
     }
