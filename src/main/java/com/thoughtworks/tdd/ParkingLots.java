@@ -63,6 +63,30 @@ public class ParkingLots {
         return parkCarResult;
     }
 
+    public GetCarResult getCar(Ticket ticket, ServiceManager serviceManager) {
+        GetCarResult getCarResult = new GetCarResult();
+        if (ticket == null) {
+            getCarResult.setCar(null);
+            getCarResult.setMessage("Please provide your parking ticket.");
+        } else {
+            ParkingLot parkingLot = parkinglots.get(ticket.getParkingLotId());
+            if (parkingLot.getServiceManager() == serviceManager) {
+                Car car = parkingLot.getParkingCarTicket().get(ticket);
+                getCarResult.setCar(car);
+                if (car == null) {
+                    getCarResult.setMessage("Unrecognized parking ticket.");
+                } else {
+                    parkingLot.getParkingCarTicket().remove(ticket);
+                    getCarResult.setMessage("Success fetch the car.");
+                }
+            } else {
+                getCarResult.setCar(null);
+                getCarResult.setMessage("This parking lot is not in your jurisdiction.");
+            }
+        }
+        return getCarResult;
+    }
+
     public GetCarResult getCar(Ticket ticket) {
         GetCarResult getCarResult = new GetCarResult();
         if (ticket == null) {

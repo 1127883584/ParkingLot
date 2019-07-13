@@ -31,4 +31,9 @@ public class ParkingBoy {
         GetCarResult getCarResult = parkingLots.getCar(ticket);
         return getCarResult;
     }
+
+    public GetCarResult fetch(Ticket ticket, ServiceManager serviceManager){
+        GetCarResult getCarResult = parkingLots.getCar(ticket, serviceManager);
+        return getCarResult;
+    }
 }

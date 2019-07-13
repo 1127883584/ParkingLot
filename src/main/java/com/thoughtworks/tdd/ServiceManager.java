@@ -10,6 +10,16 @@ public class ServiceManager extends ParkingBoy{
         managementList = new HashMap<>();
     }
 
+    public ParkCarResult park(Car car) {
+        ParkCarResult parkCarResult = super.getParkingLots().park(car, this);
+        return parkCarResult;
+    }
+
+    public GetCarResult fetch(Ticket ticket){
+        GetCarResult getCarResult = super.getParkingLots().getCar(ticket, this);
+        return getCarResult;
+    }
+
     public void addParkingBoysToList(ParkingBoy parkingBoy) {
         managementList.put(parkingBoy.getId(), parkingBoy);
     }
@@ -24,5 +34,17 @@ public class ServiceManager extends ParkingBoy{
             parkCarResult = parkingBoy.park(car, this);
         }
         return parkCarResult;
+    }
+
+    public GetCarResult orderParkingBoyToFetch(Ticket ticket, ParkingBoy parkingBoy) {
+        ParkingBoy parkingBoyTemp = managementList.get(parkingBoy.getId());
+        GetCarResult getCarResult = new GetCarResult();
+        if (parkingBoyTemp == null) {
+            getCarResult.setMessage("This parking boy is not in your management list.");
+            getCarResult.setCar(null);
+        } else {
+            getCarResult = parkingBoy.fetch(ticket, this);
+        }
+        return getCarResult;
     }
 }
