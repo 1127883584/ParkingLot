@@ -84,4 +84,29 @@ public class ParkingBoyTest {
             parkingBoy.park(overflowCar);
         });
     }
+
+    @Test
+    public void should_not_park_car_when_park_a_parked_car() throws Exception {
+        //given
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        //when
+        parkingBoy.park(car);
+
+        Assertions.assertThrows(Exception.class, () -> {
+            parkingBoy.park(car);
+        });
+    }
+
+    @Test
+    public void should_not_park_car_when_park_a_null_car(){
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        Assertions.assertThrows(Exception.class, () -> {
+            parkingBoy.park(null);
+        });
+    }
 }
