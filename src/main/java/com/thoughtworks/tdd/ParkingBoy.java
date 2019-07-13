@@ -12,8 +12,8 @@ public class ParkingBoy {
         return ticket;
     }
 
-    public Car fetch(Ticket ticket) throws Exception{
-        Car car = parkingLot.getCar(ticket);
-        return car;
+    public GetCarResult fetch(Ticket ticket){
+        GetCarResult getCarResult = parkingLot.getCar(ticket);
+        return getCarResult;
     }
 }

@@ -3,6 +3,8 @@ package com.thoughtworks.tdd;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class ParkingBoyTest {
@@ -15,7 +17,7 @@ public class ParkingBoyTest {
 
         //when
         Ticket ticket = parkingBoy.park(car);
-        Car fetchedCar = parkingBoy.fetch(ticket);
+        Car fetchedCar = parkingBoy.fetch(ticket).getCar();
 
         //then
         assertSame(car, fetchedCar);
@@ -32,8 +34,8 @@ public class ParkingBoyTest {
         //when
         Ticket firstTicket = parkingBoy.park(firstCar);
         Ticket secondTicket = parkingBoy.park(secondCar);
-        Car fetchedFirstCar = parkingBoy.fetch(firstTicket);
-        Car fetchedSecondCar = parkingBoy.fetch(secondTicket);
+        Car fetchedFirstCar = parkingBoy.fetch(firstTicket).getCar();
+        Car fetchedSecondCar = parkingBoy.fetch(secondTicket).getCar();
 
         //then
         assertSame(firstCar, fetchedFirstCar);
@@ -50,13 +52,11 @@ public class ParkingBoyTest {
         //when
         parkingBoy.park(car);
 
-        Assertions.assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(wrongTicket);
-        });
+        assertSame(null, parkingBoy.fetch(wrongTicket).getCar());
     }
 
     @Test
-    public void should_not_fetch_when_ticket_is_used() throws Exception {
+    public void should_not_fetch_when_ticket_has_been_used() throws Exception {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
@@ -66,9 +66,7 @@ public class ParkingBoyTest {
         Ticket ticket = parkingBoy.park(car);
         parkingBoy.fetch(ticket);
 
-        Assertions.assertThrows(Exception.class, () -> {
-            parkingBoy.fetch(ticket);
-        });
+        assertSame(null, parkingBoy.fetch(ticket).getCar());
     }
 
     @Test
@@ -108,5 +106,28 @@ public class ParkingBoyTest {
         Assertions.assertThrows(Exception.class, () -> {
             parkingBoy.park(null);
         });
+    }
+
+    @Test
+    public void should_return_error_message_when_not_provide_ticket() throws Exception {
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        parkingBoy.park(car);
+
+        assertThat(parkingBoy.fetch(null).getMessage(), is("Unrecognized parking ticket."));
+    }
+
+    @Test
+    public void should_return_error_message_when_ticket_has_been_used() throws Exception {
+        Car car = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        Ticket ticket = parkingBoy.park(car);
+        parkingBoy.fetch(ticket);
+
+        assertThat(parkingBoy.fetch(ticket).getMessage(), is("Unrecognized parking ticket."));
     }
 }

@@ -26,12 +26,16 @@ public class ParkingLot {
         return ticket;
     }
 
-    public Car getCar(Ticket ticket) throws Exception {
+    public GetCarResult getCar(Ticket ticket) {
         Car car = parkingCarTicket.get(ticket);
+        GetCarResult getCarResult = new GetCarResult();
+        getCarResult.setCar(car);
         if (car == null) {
-            throw new Exception();
+            getCarResult.setMessage("Unrecognized parking ticket.");
+        } else {
+            parkingCarTicket.remove(ticket);
+            getCarResult.setMessage("Success fetch the car.");
         }
-        parkingCarTicket.remove(ticket);
-        return car;
+        return getCarResult;
     }
 }
