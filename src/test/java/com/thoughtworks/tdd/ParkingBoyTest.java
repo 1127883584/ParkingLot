@@ -22,6 +22,25 @@ public class ParkingBoyTest {
     }
 
     @Test
+    public void should_multiple_cars_when_use_correspond_ticket(){
+        //given
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+
+        //when
+        Ticket firstTicket = parkingBoy.park(firstCar);
+        Ticket secondTicket = parkingBoy.park(secondCar);
+        Car fetchedFirstCar = parkingBoy.fetch(firstTicket);
+        Car fetchedSecondCar = parkingBoy.fetch(secondTicket);
+
+        //then
+        assertSame(firstCar, fetchedFirstCar);
+        assertSame(secondCar, fetchedSecondCar);
+    }
+
+    @Test
     public void should_not_fetch_car_when_ticket_is_wrong(){
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
