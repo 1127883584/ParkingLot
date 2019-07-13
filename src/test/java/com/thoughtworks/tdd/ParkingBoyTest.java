@@ -12,8 +12,8 @@ public class ParkingBoyTest {
     public void should_return_car_when_park_car_to_parking_lot_then_get_it_back() {
         //given
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         Ticket ticket = parkingBoy.park(car).getTicket();
@@ -28,8 +28,8 @@ public class ParkingBoyTest {
         //given
         Car firstCar = new Car();
         Car secondCar = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         Ticket firstTicket = parkingBoy.park(firstCar).getTicket();
@@ -45,9 +45,9 @@ public class ParkingBoyTest {
     @Test
     public void should_not_fetch_car_when_ticket_is_wrong() {
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
-        Ticket wrongTicket = new Ticket();
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        Ticket wrongTicket = new Ticket(0);
 
         //when
         parkingBoy.park(car);
@@ -59,8 +59,8 @@ public class ParkingBoyTest {
     public void should_not_fetch_when_ticket_has_been_used() {
         //given
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         Ticket ticket = parkingBoy.park(car).getTicket();
@@ -71,8 +71,8 @@ public class ParkingBoyTest {
 
     @Test
     public void should_not_park_car_when_parking_lot_capacity_is_full() {
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         for(int i = 0; i < 10; i ++) {
             Car car = new Car();
             parkingBoy.park(car);
@@ -86,8 +86,8 @@ public class ParkingBoyTest {
     public void should_not_park_car_when_park_a_parked_car() {
         //given
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         //when
         parkingBoy.park(car);
@@ -97,8 +97,8 @@ public class ParkingBoyTest {
 
     @Test
     public void should_not_park_car_when_park_a_null_car(){
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         assertSame(null, parkingBoy.park(null).getTicket());
     }
@@ -106,10 +106,10 @@ public class ParkingBoyTest {
     @Test
     public void should_return_error_message_when_ticket_is_wrong() {
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
-        Ticket ticket = new Ticket();
+        Ticket ticket = new Ticket(0);
         parkingBoy.park(car);
 
         assertThat(parkingBoy.fetch(ticket).getMessage(), is("Unrecognized parking ticket."));
@@ -118,8 +118,8 @@ public class ParkingBoyTest {
     @Test
     public void should_return_error_message_when_ticket_has_been_used() {
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         Ticket ticket = parkingBoy.park(car).getTicket();
         parkingBoy.fetch(ticket);
@@ -130,8 +130,8 @@ public class ParkingBoyTest {
     @Test
     public void should_return_error_message_when_not_provide_ticket() {
         Car car = new Car();
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
 
         parkingBoy.park(car);
 
@@ -140,8 +140,8 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_error_message_when_park_car_into_parking_lot_without_position() {
-        ParkingLot parkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        ParkingLots parkingLots = new ParkingLots(1);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         for(int i = 0; i < 10; i ++) {
             Car car = new Car();
             parkingBoy.park(car);
@@ -149,5 +149,20 @@ public class ParkingBoyTest {
         Car overflowCar = new Car();
 
         assertThat(parkingBoy.park(overflowCar).getMessage(), is("Not enough position."));
+    }
+
+    @Test
+    public void should_return_the_second_parking_lot_when_the_first_parking_lot_is_full() {
+        ParkingLots parkingLots = new ParkingLots(10);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+        for(int i = 0; i < 10; i ++) {
+            Car car = new Car();
+            parkingBoy.park(car);
+        }
+
+        Car overflowCar = new Car();
+        Ticket ticket = parkingBoy.park(overflowCar).getTicket();
+        assertSame(1, ticket.getParkingLotId());
     }
 }

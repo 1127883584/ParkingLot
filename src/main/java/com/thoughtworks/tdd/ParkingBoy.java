@@ -1,19 +1,19 @@
 package com.thoughtworks.tdd;
 
 public class ParkingBoy {
-    private ParkingLot parkingLot;
+    private ParkingLots parkingLots;
 
-    public ParkingBoy(ParkingLot parkingLot){
-        this.parkingLot = parkingLot;
+    public ParkingBoy(ParkingLots parkingLots){
+        this.parkingLots = parkingLots;
     }
 
     public ParkCarResult park(Car car) {
-        ParkCarResult parkCarResult = parkingLot.park(car);
+        ParkCarResult parkCarResult = parkingLots.park(car);
         return parkCarResult;
     }
 
     public GetCarResult fetch(Ticket ticket){
-        GetCarResult getCarResult = parkingLot.getCar(ticket);
+        GetCarResult getCarResult = parkingLots.getCar(ticket);
         return getCarResult;
     }
 }
