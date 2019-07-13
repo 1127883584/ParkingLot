@@ -165,4 +165,19 @@ public class ParkingBoyTest {
         Ticket ticket = parkingBoy.park(overflowCar).getTicket();
         assertSame(1, ticket.getParkingLotId());
     }
+
+    @Test
+    public void should_return2_the_second_parking_lot_when_the_first_parking_lot_is_full() {
+        ParkingLots parkingLots = new ParkingLots(10);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        for(int i = 0; i < 11; i ++) {
+            Car car = new Car();
+            smartParkingBoy.smartPark(car);
+        }
+
+        Car overflowCar = new Car();
+        Ticket ticket = smartParkingBoy.smartPark(overflowCar).getTicket();
+        assertSame(1, ticket.getParkingLotId());
+    }
+
 }

@@ -7,6 +7,10 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
+    public ParkingLots getParkingLots() {
+        return parkingLots;
+    }
+
     public ParkCarResult park(Car car) {
         ParkCarResult parkCarResult = parkingLots.park(car);
         return parkCarResult;
