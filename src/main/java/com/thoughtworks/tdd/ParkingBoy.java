@@ -2,17 +2,28 @@ package com.thoughtworks.tdd;
 
 public class ParkingBoy {
     private ParkingLots parkingLots;
+    private String id;
 
-    public ParkingBoy(ParkingLots parkingLots){
+    public ParkingBoy(ParkingLots parkingLots, String id){
         this.parkingLots = parkingLots;
+        this.id = id;
     }
 
     public ParkingLots getParkingLots() {
         return parkingLots;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public ParkCarResult park(Car car) {
         ParkCarResult parkCarResult = parkingLots.park(car);
+        return parkCarResult;
+    }
+
+    public ParkCarResult park(Car car, ServiceManager serviceManager) {
+        ParkCarResult parkCarResult = parkingLots.park(car, serviceManager);
         return parkCarResult;
     }
 

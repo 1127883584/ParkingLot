@@ -15,6 +15,31 @@ public class ParkingLots {
         generateEveryParkingLot(parkingLotArray);
     }
 
+    public ParkCarResult park(Car car, ServiceManager serviceManager){
+        ParkCarResult parkCarResult = new ParkCarResult();
+        for (Integer key : parkinglots.keySet()) {
+            ParkingLot parkingLot = parkinglots.get(key);
+            if (parkingLot.getServiceManager() == serviceManager) {
+                if (parkingLot.getParkingCarTicket().size() == parkingLot.getCapacity()) {
+                    parkCarResult.setTicket(null);
+                    parkCarResult.setMessage("Not enough position.");
+                } else {
+                    if (car == null || parkingLot.getParkingCarTicket().containsValue(car)) {
+                        parkCarResult.setTicket(null);
+                        parkCarResult.setMessage("Car not park a parked car or park a null car.");
+                    } else {
+                        Ticket ticket = new Ticket(key);
+                        parkingLot.getParkingCarTicket().put(ticket, car);
+                        parkCarResult.setTicket(ticket);
+                        parkCarResult.setMessage("Success park car.");
+                    }
+                }
+                break;
+            }
+        }
+        return parkCarResult;
+    }
+
     public ParkCarResult park(Car car){
         ParkCarResult parkCarResult = new ParkCarResult();
         for (Integer key : parkinglots.keySet()) {

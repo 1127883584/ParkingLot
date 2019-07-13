@@ -1,11 +1,11 @@
 package com.thoughtworks.tdd;
 
 public class SmartParkingBoy extends ParkingBoy {
-    public SmartParkingBoy(ParkingLots parkingLots){
-        super(parkingLots);
+    public SmartParkingBoy(ParkingLots parkingLots, String id){
+        super(parkingLots, id);
     }
 
-    public ParkCarResult smartPark(Car car) {
+    public ParkCarResult park(Car car) {
         return super.getParkingLots().smartPark(car);
     }
 }

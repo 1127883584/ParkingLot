@@ -11,10 +11,11 @@ public class ParkingBoyTest {
     @Test
     public void should_return_car_when_park_car_to_parking_lot_then_get_it_back() {
         //given
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         //when
         Ticket ticket = parkingBoy.park(car).getTicket();
@@ -29,9 +30,10 @@ public class ParkingBoyTest {
         //given
         Car firstCar = new Car();
         Car secondCar = new Car();
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         //when
         Ticket firstTicket = parkingBoy.park(firstCar).getTicket();
@@ -43,13 +45,14 @@ public class ParkingBoyTest {
         assertSame(firstCar, fetchedFirstCar);
         assertSame(secondCar, fetchedSecondCar);
     }
-
+//
     @Test
     public void should_not_fetch_car_when_ticket_is_wrong() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
         Ticket wrongTicket = new Ticket(0);
 
         //when
@@ -61,10 +64,11 @@ public class ParkingBoyTest {
     @Test
     public void should_not_fetch_when_ticket_has_been_used() {
         //given
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         //when
         Ticket ticket = parkingBoy.park(car).getTicket();
@@ -75,9 +79,10 @@ public class ParkingBoyTest {
 
     @Test
     public void should_not_park_car_when_parking_lot_capacity_is_full() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
         for(int i = 0; i < 10; i ++) {
             Car car = new Car();
             parkingBoy.park(car);
@@ -90,10 +95,11 @@ public class ParkingBoyTest {
     @Test
     public void should_not_park_car_when_park_a_parked_car() {
         //given
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         //when
         parkingBoy.park(car);
@@ -103,19 +109,21 @@ public class ParkingBoyTest {
 
     @Test
     public void should_not_park_car_when_park_a_null_car(){
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         assertSame(null, parkingBoy.park(null).getTicket());
     }
 
     @Test
     public void should_return_error_message_when_ticket_is_wrong() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         Ticket ticket = new Ticket(0);
         parkingBoy.park(car);
@@ -125,10 +133,11 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_error_message_when_ticket_has_been_used() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         Ticket ticket = parkingBoy.park(car).getTicket();
         parkingBoy.fetch(ticket);
@@ -138,10 +147,11 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_error_message_when_not_provide_ticket() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         Car car = new Car();
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         parkingBoy.park(car);
 
@@ -150,9 +160,10 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_error_message_when_park_car_into_parking_lot_without_position() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot};
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
         for(int i = 0; i < 5; i ++) {
             Car car = new Car();
             parkingBoy.park(car);
@@ -164,9 +175,11 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_the_second_parking_lot_when_the_first_parking_lot_is_full() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5), new ParkingLot(8), new ParkingLot(10)};
-        ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot secondParkingLot = new ParkingLot(8);
+        ParkingLot thirdParkingLot = new ParkingLot(10);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot, secondParkingLot, thirdParkingLot};        ParkingLots parkingLots = new ParkingLots(parkingLotArray);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
 
         for(int i = 0; i < 10; i ++) {
             Car car = new Car();
@@ -180,32 +193,66 @@ public class ParkingBoyTest {
 
     @Test
     public void should_return_the_right_parking_lot_id_when_the_smart_parking_boy_part_car() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5), new ParkingLot(8), new ParkingLot(10)};
-        ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot secondParkingLot = new ParkingLot(8);
+        ParkingLot thirdParkingLot = new ParkingLot(10);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot, secondParkingLot, thirdParkingLot};        ParkingLots parkingLots = new ParkingLots(parkingLotArray);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots, "EL0316");
         for(int i = 0; i < 6; i ++) {
             Car car = new Car();
-            smartParkingBoy.smartPark(car);
+            smartParkingBoy.park(car);
         }
 
         Car overflowCar = new Car();
-        Ticket ticket = smartParkingBoy.smartPark(overflowCar).getTicket();
+        Ticket ticket = smartParkingBoy.park(overflowCar).getTicket();
         assertSame(1, ticket.getParkingLotId());
     }
 
     @Test
     public void should_return_the_right_parking_lot_id_when_the_super_smart_parking_boy_part_car() {
-        ParkingLot[] parkingLotArray = new ParkingLot[]{new ParkingLot(5), new ParkingLot(8), new ParkingLot(10)};
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot secondParkingLot = new ParkingLot(8);
+        ParkingLot thirdParkingLot = new ParkingLot(10);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot, secondParkingLot, thirdParkingLot};
         ParkingLots parkingLots = new ParkingLots(parkingLotArray);
-        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots, "EL0317");
         for(int i = 0; i < 6; i ++) {
             Car car = new Car();
-            superSmartParkingBoy.superSmartPark(car);
+            superSmartParkingBoy.park(car);
         }
 
         Car overflowCar = new Car();
-        ParkCarResult parkCarResult = superSmartParkingBoy.superSmartPark(overflowCar);
+        ParkCarResult parkCarResult = superSmartParkingBoy.park(overflowCar);
         Ticket ticket = parkCarResult.getTicket();
         assertSame(2, ticket.getParkingLotId());
+    }
+
+    @Test
+    public void should_return_the_right_parking_lot_id_when_the_manager_order_parking_boy_to_park_car() {
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot secondParkingLot = new ParkingLot(8);
+        ParkingLot thirdParkingLot = new ParkingLot(10);
+        ParkingLot[] parkingLotArray = new ParkingLot[]{firstParkingLot, secondParkingLot, thirdParkingLot};
+        ParkingLots parkingLots = new ParkingLots(parkingLotArray);
+        ServiceManager serviceManager = new ServiceManager(parkingLots, "EL0001");
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots, "EL0315");
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots, "EL0316");
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots, "EL0317");
+
+        serviceManager.addParkingBoysToList(parkingBoy);
+        serviceManager.addParkingBoysToList(smartParkingBoy);
+        serviceManager.addParkingBoysToList(superSmartParkingBoy);
+
+        //serviceManage manage the secondParkingLot
+        secondParkingLot.setServiceManager(serviceManager);
+
+        Car car = new Car();
+
+        ParkCarResult parkCarByOrderParkingBoyResult = serviceManager.orderParkingBoyToPark(car, parkingBoy);
+//        ParkCarResult parkCarByOrderSmartParkingBoyResult = serviceManager.orderParkingBoyToPark(car, parkingBoy);
+//        ParkCarResult parkCarByOrderSuperSmartParkingBoyResult = serviceManager.orderParkingBoyToPark(car, parkingBoy);
+        Ticket ticket = parkCarByOrderParkingBoyResult.getTicket();
+        assertSame(1, ticket.getParkingLotId());
     }
 }
