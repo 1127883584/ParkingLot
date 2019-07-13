@@ -9,10 +9,10 @@ public class ParkingLots {
     private int capacity;
     private int parkingLotCapacity = 10;
 
-    public ParkingLots(int capacity) {
+    public ParkingLots(ParkingLot[] parkingLotArray) {
         this.parkinglots = new HashMap<>();
-        this.capacity = capacity;
-        generateEveryParkingLot();
+        this.capacity = parkingLotArray.length;
+        generateEveryParkingLot(parkingLotArray);
     }
 
     public ParkCarResult park(Car car){
@@ -79,22 +79,65 @@ public class ParkingLots {
             }
         }
         int maxRemainingCapacityIndex = getMaxIndex(remainingCapacity);
-        Ticket ticket = new Ticket(maxRemainingCapacityIndex);
-        parkinglots.get(maxRemainingCapacityIndex).getParkingCarTicket().put(ticket, car);
-        parkCarResult.setTicket(ticket);
-        parkCarResult.setMessage("Success park car.");
+        if (remainingCapacity[maxRemainingCapacityIndex] != 0) {
+            Ticket ticket = new Ticket(maxRemainingCapacityIndex);
+            parkinglots.get(maxRemainingCapacityIndex).getParkingCarTicket().put(ticket, car);
+            parkCarResult.setTicket(ticket);
+            parkCarResult.setMessage("Success park car.");
+        }
         return parkCarResult;
     }
 
-    public void generateEveryParkingLot() {
-        for (int i = 0; i < capacity; i ++) {
-            ParkingLot parkingLot = new ParkingLot(parkingLotCapacity);
-            parkinglots.put(i, parkingLot);
+    public ParkCarResult superSmartPark(Car car){
+        ParkCarResult parkCarResult = new ParkCarResult();
+        double[] availablePositionRate = new double[capacity];
+        Arrays.fill(availablePositionRate, 1);
+        int i = 0;
+        for (Integer key : parkinglots.keySet()) {
+            ParkingLot parkingLot = parkinglots.get(key);
+            availablePositionRate[i] = ((double)(parkingLot.getCapacity() - parkingLot.getParkingCarTicket().size()))/parkingLot.getCapacity();
+            i ++;
+            if (parkingLot.getParkingCarTicket().size() == parkingLot.getCapacity()) {
+                parkCarResult.setTicket(null);
+                parkCarResult.setMessage("Not enough position.");
+            } else {
+                if (car == null || parkingLot.getParkingCarTicket().containsValue(car)) {
+                    parkCarResult.setTicket(null);
+                    parkCarResult.setMessage("Car not park a parked car or park a null car.");
+                    return parkCarResult;
+                }
+            }
+        }
+        int maxRemainingCapacityIndex = getMaxIndex(availablePositionRate);
+        if (availablePositionRate[maxRemainingCapacityIndex] > 0) {
+            Ticket ticket = new Ticket(maxRemainingCapacityIndex);
+            parkinglots.get(maxRemainingCapacityIndex).getParkingCarTicket().put(ticket, car);
+            parkCarResult.setTicket(ticket);
+            parkCarResult.setMessage("Success park car.");
+        }
+        return parkCarResult;
+    }
+
+    public void generateEveryParkingLot(ParkingLot[] parkingLotArray) {
+        for (int i = 0; i < parkingLotArray.length; i ++) {
+            parkinglots.put(i, parkingLotArray[i]);
         }
     }
 
     public int getMaxIndex(int[] arr) {
         int max = arr[0];
+        int maxIndex = 0;
+        for(int i = 0; i < arr.length; i ++) {
+            if(arr[i] > max) {
+                max = arr[i];
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+
+    public int getMaxIndex(double[] arr) {
+        double max = arr[0];
         int maxIndex = 0;
         for(int i = 0; i < arr.length; i ++) {
             if(arr[i] > max) {
