@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class ParkingBoyTest {
     @Test
-    public void should_return_car_when_park_car_to_parking_lot_the_get_it_back() throws Exception {
+    public void should_return_car_when_park_car_to_parking_lot_then_get_it_back() throws Exception {
         //given
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
@@ -41,7 +41,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_not_fetch_car_when_ticket_is_wrong(){
+    public void should_not_fetch_car_when_ticket_is_wrong() throws Exception {
         Car car = new Car();
         ParkingLot parkingLot = new ParkingLot();
         ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
@@ -68,6 +68,20 @@ public class ParkingBoyTest {
 
         Assertions.assertThrows(Exception.class, () -> {
             parkingBoy.fetch(ticket);
+        });
+    }
+
+    @Test
+    public void should_not_park_car_when_parking_lot_capacity_is_full() throws Exception {
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        for(int i = 0; i < 10; i ++) {
+            Car car = new Car();
+            parkingBoy.park(car);
+        }
+        Car overflowCar = new Car();
+        Assertions.assertThrows(Exception.class, () -> {
+            parkingBoy.park(overflowCar);
         });
     }
 }
