@@ -15,7 +15,11 @@ public class ParkingLot {
         return ticket;
     }
 
-    public Car getCar(Ticket ticket){
-        return parkingCarTicket.get(ticket);
+    public Car getCar(Ticket ticket) throws Exception {
+        Car car = parkingCarTicket.get(ticket);
+        if (car == null) {
+            throw new Exception();
+        }
+        return car;
     }
 }
